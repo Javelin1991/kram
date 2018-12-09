@@ -24,11 +24,60 @@ const WINDOW_HEIGHT = Dimensions.get('window').height;
 const LEFT_DATA_SOURCE = [
   {
     key: 0,
+    title: 'Wallet',
+    image: '',
+    price: 10,
+    description: 'Good bag',
+    imageUrl: require("../assets/images/Img_1.png"),
+    time: '',
+    location: '',
+    address: '',
+  },
+  {
+    key: 1,
     title: 'Bag',
     image: '',
     price: 10,
     description: 'Good bag',
-    imageUrl: require("../assets/images/Img_1.png")
+    imageUrl: require("../assets/images/Img_2.png"),
+    time: '',
+    location: '',
+    address: '',
+  },
+  {
+    key: 2,
+    title: 'Bag',
+    image: '',
+    price: 10,
+    description: 'Good bag',
+    imageUrl: require("../assets/images/Img_3.png"),
+    time: '',
+    location: '',
+    address: '',
+  },
+  {
+    key: 3,
+    title: 'Wallet',
+    image: '',
+    price: 10,
+    description: 'Good bag',
+    imageUrl: require("../assets/images/Img_4.png"),
+    time: '',
+    location: '',
+    address: '',
+  },
+];
+const RIGHT_DATA_SOURCE = [
+  {
+    key: 0,
+    title: 'Wallet',
+    image: '',
+    price: 10,
+    description: 'Good bag',
+    imageUrl: require("../assets/images/Img_5.png"),
+    time: '',
+    location: '',
+    address: '',
   },
   {
     key: 1,
@@ -36,45 +85,14 @@ const LEFT_DATA_SOURCE = [
     image: '',
     price: 10,
     description: 'Good bag',
-    imageUrl: require("../assets/images/Img_2.png")
+    imageUrl: require("../assets/images/Img_6.png"),
+    time: '',
+    location: '',
+    address: '',
   },
   {
     key: 2,
-    title: 'Bag',
-    image: '',
-    price: 10,
-    description: 'Good bag',
-    imageUrl: require("../assets/images/Img_3.png")
-  },
-  {
-    key: 3,
-    title: 'Bag',
-    image: '',
-    price: 10,
-    description: 'Good bag',
-    imageUrl: require("../assets/images/Img_4.png")
-  },
-];
-const RIGHT_DATA_SOURCE = [
-  {
-    key: 0,
-    title: 'Handphone',
-    image: '',
-    price: 10,
-    description: 'Good bag',
-    imageUrl: require("../assets/images/Img_5.png")
-  },
-  {
-    key: 1,
-    title: 'Pouch',
-    image: '',
-    price: 10,
-    description: 'Good bag',
-    imageUrl: require("../assets/images/Img_6.png")
-  },
-  {
-    key: 2,
-    title: 'Pouch',
+    title: 'Wallet',
     image: '',
     price: 10,
     description: 'Good bag',
@@ -82,11 +100,14 @@ const RIGHT_DATA_SOURCE = [
   },
   {
     key: 3,
-    title: 'Pouch',
+    title: 'Bag',
     image: '',
     price: 10,
     description: 'Good bag',
-    imageUrl: require("../assets/images/Img_8.png")
+    imageUrl: require("../assets/images/Img_8.png"),
+    time: '',
+    location: '',
+    address: '',
   },
 ];
 
@@ -196,6 +217,7 @@ export default class HomeScreen extends React.Component {
           location={this.state.dialogData.location}
           address={this.state.dialogData.address}
           description={this.state.dialogData.description}
+          imageUrl={this.state.dialogData.imageUrl}
         />
       </ScrollView>
     );

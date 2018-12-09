@@ -126,7 +126,13 @@ export default class KramDialog extends React.Component {
         {
           this.props.isItemView && !this.props.isKramView && !this.props.isPaymentSuccessView && !this.props.isLoading &&
           <ScrollView style={styles.content}>
-            <Image style={styles.img} source={this.props.image} />
+              <View style={styles.image}>
+                <Image
+                     style={{ height: WINDOW_WIDTH/2 + 40, width: WINDOW_WIDTH }}
+                     source={this.props.imageUrl}
+                     resizeMode="cover"
+                />
+              </View>
               <View style={styles.infoRow}>
                 <View style={styles.icon}>
                   <Ionicons name="md-calendar" size={24} color="grey" />
@@ -219,9 +225,10 @@ const styles = StyleSheet.create({
     lineHeight: 25,
     paddingLeft: 5,
   },
-  img: {
-    width: WINDOW_WIDTH,
-    height: WINDOW_HEIGHT/3.8,
+  image: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center'
   },
   icon: {
     width: 30,
@@ -229,7 +236,6 @@ const styles = StyleSheet.create({
   },
   content: {
     flex: 1,
-    padding: 20
   },
   loaderContainer: {
     flex: 1,
