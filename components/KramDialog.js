@@ -14,6 +14,7 @@ import {
   KeyboardAvoidingView,
   Keyboard
 } from 'react-native';
+import * as Animatable from 'react-native-animatable';
 import Colors from '../constants/Colors';
 import Dialog, { SlideAnimation, DialogContent, DialogTitle, DialogButton } from 'react-native-popup-dialog';
 import { Ionicons } from '@expo/vector-icons';
@@ -30,7 +31,8 @@ export default class KramDialog extends React.Component {
     this.state = {
       name: '',
       email: '',
-      recipients: [{ name: '', contact: '' }]
+      recipients: [{ name: '', contact: '' }],
+      showPaymentTitle: true
     }
     this.recipientsCount = 1;
   }
@@ -135,15 +137,61 @@ export default class KramDialog extends React.Component {
   renderPaymentSuccessView = () => {
     return (
       !this.props.isItemView && !this.props.isKramView && this.props.isPaymentSuccessView && !this.props.isLoading &&
-      <View style={styles.paymentSuccessView}>
+      <Animatable.View style={styles.paymentSuccessView} animation="slideInUp" delay={2000}>
         <View style={styles.bigIcon}>
           <Ionicons name="md-checkmark-circle" size={148} color="green" />
         </View>
-        <Text style={styles.paymentSuccessTitle}>Payment Success</Text>
-        <Text style={styles.paymentSuccessSubtitle}>Your invitees has been notified to make payment for their shares.</Text>
-      </View>
+        {
+          this.props.showPaymentTitle &&
+          <Animatable.View animation="fadeOut" delay={2000} onAnimationEnd={this.props.togglePaymentTitle}>
+            <Text style={styles.paymentSuccessTitle}>Payment Success</Text>
+            <Text style={styles.paymentSuccessSubtitle}>Your invitees has been notified to make payment for their shares.</Text>
+          </Animatable.View>
+        }
+        {
+          !this.props.showPaymentTitle &&
+          <View>
+            <Animatable.View animation="fadeIn" delay={600}>
+              <Text style={styles.paymentSuccessTitle}>Your invitees</Text>
+            </Animatable.View>
+            <Animatable.View animation="fadeIn" delay={1100} style={styles.paymentSuccessInviteeRow}>
+              <View>
+                <Text style={styles.paymentSuccessName}>Mark</Text>
+              </View>
+              <View style={styles.paymentSuccessSmallIcon}>
+                <Ionicons name="md-checkmark-circle" size={48} color="green" />
+              </View>
+            </Animatable.View>
+            <Animatable.View animation="fadeIn" delay={1600} style={styles.paymentSuccessInviteeRow}>
+              <View>
+                <Text style={styles.paymentSuccessName}>Clement</Text>
+              </View>
+              <View style={styles.paymentSuccessSmallIcon}>
+                <Ionicons name="md-close-circle" size={48} color="red" />
+              </View>
+            </Animatable.View>
+            <Animatable.View animation="fadeIn" delay={2100} style={styles.paymentSuccessInviteeRow}>
+              <View>
+                <Text style={styles.paymentSuccessName}>Htet</Text>
+              </View>
+              <View style={styles.paymentSuccessSmallIcon}>
+                <Ionicons name="md-close-circle" size={48} color="red" />
+              </View>
+            </Animatable.View>
+            <Animatable.View animation="fadeIn" delay={2600} style={styles.paymentSuccessInviteeRow}>
+              <View>
+                <Text style={styles.paymentSuccessName}>Wei Kang</Text>
+              </View>
+              <View style={styles.paymentSuccessSmallIcon}>
+                <Ionicons name="md-close-circle" size={48} color="red" />
+              </View>
+            </Animatable.View>
+          </View>
+        }
+      </Animatable.View>
     )
   }
+
   renderRecipants = () => {
     return this.state.recipients.map((item, i) => (
       <View style={styles.textFieldRow} key={i}>
@@ -185,18 +233,30 @@ export default class KramDialog extends React.Component {
         dialogAnimation={new SlideAnimation({
           slideFrom: 'bottom'
         })}
-        actions={!this.props.isLoading ? [
-          <DialogButton
-            key={0}
-            text="Checkout"
-            onPress={this.props.toggleDialog}
-          />,
-          <DialogButton
-            key={1}
-            text={"KRAM"}
-            onPress={() => { this.props.handleAction() }}
-          />
-        ] : []}
+        actions={
+          !this.props.isLoading && !this.props.isPaymentSuccessView ?
+          [
+            <DialogButton
+              key={0}
+              text={this.props.isItemView ? "Checkout" : "Cancel" }
+              onPress={this.props.toggleDialog}
+            />,
+            <DialogButton
+              key={1}
+              text={this.props.isItemView ? "KRAM" : "Pay"}
+              onPress={() => { this.props.handleAction() }}
+            />
+          ]
+          :
+          !this.props.isLoading && this.props.isPaymentSuccessView ?
+          [
+            this.props.isPaymentSuccessView &&
+            <DialogButton
+              key={1}
+              text={"Dismiss"}
+              onPress={() => { this.props.handleAction() }}
+            />
+          ] : []}
         width={WINDOW_WIDTH}
         height={WINDOW_HEIGHT}
         containerStyle={[{ flex: 1 }, Platform.OS === 'android' && { marginTop: Constants.statusBarHeight }]}
@@ -366,8 +426,6 @@ const styles = StyleSheet.create({
   paymentSuccessView: {
     flex: 1,
     padding: 24,
-    alignSelf: 'center',
-    justifyContent: 'center',
   },
   paymentSuccessTitle: {
     fontFamily: 'Avenir',
@@ -381,5 +439,19 @@ const styles = StyleSheet.create({
     color: 'grey',
     alignSelf: 'center',
     textAlign: 'center',
+  },
+  paymentSuccessInviteeRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginTop: 12
+  },
+  paymentSuccessName: {
+    fontFamily: 'Avenir',
+    fontSize: 20,
+    color: 'grey'
+  },
+  paymentSuccessSmallIcon: {
+    width: 44,
+    height: 44
   }
 });

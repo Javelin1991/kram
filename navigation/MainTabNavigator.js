@@ -64,7 +64,7 @@ export default createMaterialTopTabNavigator(
     initialRouteName: 'HomeStack',
     tabBarOptions: {
       style: {
-        paddingTop: Constants.statusBarHeight
+        paddingTop: Constants.statusBarHeight + 12
       }
     },
   }
