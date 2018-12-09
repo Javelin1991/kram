@@ -12,12 +12,12 @@ import {
   ActivityIndicator,
   ListView
 } from 'react-native';
-import { WebBrowser, Constants } from 'expo';
 import { MonoText } from '../components/StyledText';
 import CardView from 'react-native-cardview';
 import { Ionicons } from '@expo/vector-icons';
 import Dialog, { SlideAnimation, DialogContent, DialogTitle, DialogButton } from 'react-native-popup-dialog';
 import Card from '../components/Card';
+import KramDialog from '../components/KramDialog';
 
 const WINDOW_WIDTH = Dimensions.get('window').width;
 const WINDOW_HEIGHT = Dimensions.get('window').height;
@@ -92,26 +92,62 @@ export default class HomeScreen extends React.Component {
     const lds = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 });
     const rds = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 });
     this.state = {
-      openModal: false,
-      isRematch: false,
+      isOpenDialog: false,
+      type: '',
+      isLoading: false,
+      isItemView: true,
+      isKramView: false,
+      isPaymentSuccessView: false,
       leftDataSource: lds.cloneWithRows(LEFT_DATA_SOURCE),
-      rightDataSource: rds.cloneWithRows(RIGHT_DATA_SOURCE)
+      rightDataSource: rds.cloneWithRows(RIGHT_DATA_SOURCE),
+      dialogData: {}
     }
   }
 
-  toggleModal = () => {
-    this.setState({ openModal: !this.state.openModal });
+  toggleDialog = (rowData = {}) => {
+    this.setState({
+      isOpenDialog: !this.state.isOpenDialog,
+      dialogData: rowData,
+      type: '',
+      isLoading: false,
+      isItemView: true,
+      isKramView: false,
+      isPaymentSuccessView: false
+   });
   }
 
-  onRematch = () => {
-    this.setState({ isRematch: !this.state.isRematch, isLoading: !this.state.isLoading });
+  resetLoaderOnDelay = () => {
     if (this.loaderTimeout != undefined) clearTimeout(this.loaderTimeout);
-    this.loaderTimeout = setTimeout(() => { this.setState({ isLoading: !this.state.isLoading }) }, 2000);
+    this.loaderTimeout = setTimeout(() => { this.setState({ isLoading: !this.state.isLoading }) }, 200);
+  }
+
+  goToKramView = () => {
+    this.setState({ isLoading: true, type: 'kram', isItemView: false, isKramView: true, isPaymentSuccessView: false });
+    this.resetLoaderOnDelay();
+  }
+
+  goToPaymentSuccessView = () => {
+    this.setState({ isLoading: true, type: 'payment_success', isItemView: false, isKramView: false, isPaymentSuccessView: true });
+    this.resetLoaderOnDelay();
+  }
+
+  handleAction = () => {
+    switch(this.state.type) {
+      case 'kram':
+        this.goToPaymentSuccessView();
+        break;
+      case 'payment_success':
+        this.toggleDialog();
+        break;
+      default:
+        this.goToKramView();
+        break;
+    }
   }
 
   renderRow = (rowData, sectionID, rowID) => (
       <Card
-        toggleModal={this.toggleModal}
+        toggleModal={() => this.toggleDialog(rowData)}
         image={this.state.image}
         title={rowData.title}
         price={rowData.price}
@@ -122,9 +158,6 @@ export default class HomeScreen extends React.Component {
   render() {
     return (
       <ScrollView style={styles.container}>
-        <View>
-         <Text style={styles.bigHeader}>TFIG</Text>
-        </View>
         <View style={styles.grid}>
           <View style={styles.list}>
             <ListView
@@ -139,75 +172,22 @@ export default class HomeScreen extends React.Component {
             />
           </View>
         </View>
-        <View style={styles.dialogContainer}>
-          <Dialog
-            key={Object.keys(this.props)}
-            visible={this.state.openModal}
-            dialogAnimation={new SlideAnimation({
-              slideFrom: 'bottom',
-            })}
-            actions={[
-              <DialogButton
-                key={0}
-                text="Checkout"
-                onPress={this.onRematch}
-              />,
-              <DialogButton
-                key={1}
-                text="KRAM"
-                onPress={this.toggleModal}
-              />
-            ]}
-            width={WINDOW_WIDTH}
-            height={WINDOW_HEIGHT}
-            onTouchOutside={this.toggleModal}
-            containerStyle={[{ flex: 1 }, Platform.OS === 'android' && { marginTop: Constants.statusBarHeight }]}
-          >
-          <DialogTitle textStyle={styles.plaintext} style={styles.dialogTitle} title={this.state.isLoading ? 'Finding your people' : 'You got three matches!'} />
-          <View style={styles.dialogContentContainer}>
-            {
-              !this.state.isRematch && !this.state.isLoading &&
-              <View>
-                <View style={styles.leftImageContainer}>
-                </View>
-
-                <View style={styles.rightImageContainer}>
-                </View>
-
-                <View style={styles.middleImageContainer}>
-                </View>
-
-                <View style={styles.matchTitleContainer}>
-                  <Text style={styles.matchTitle}>We found these people that are just like you, now go on. Make that move.</Text>
-                </View>
-              </View>
-            }
-            {
-              this.state.isRematch && !this.state.isLoading &&
-              <View>
-                <View style={styles.leftImageContainer}>
-                </View>
-
-                <View style={styles.rightImageContainer}>
-                </View>
-
-                <View style={styles.middleImageContainer}>
-                </View>
-
-                <View style={styles.matchTitleContainer}>
-                  <Text style={styles.matchTitle}>We found more people that are just like you. Time to socialize?</Text>
-                </View>
-              </View>
-            }
-            {
-              this.state.isLoading &&
-              <View style={styles.loaderContainer}>
-                <ActivityIndicator size="large" color='rgba(63, 63, 191, 1)' />
-              </View>
-            }
-          </View>
-          </Dialog>
-          </View>
+        <KramDialog
+          isOpenDialog={this.state.isOpenDialog}
+          isLoading={this.state.isLoading}
+          isItemView={this.state.isItemView}
+          isKramView={this.state.isKramView}
+          isPaymentSuccessView={this.state.isPaymentSuccessView}
+          toggleDialog={this.toggleDialog}
+          handleAction={this.handleAction}
+          title={this.state.dialogData.title}
+          price={this.state.dialogData.price}
+          image={this.state.dialogData.image}
+          time={this.state.dialogData.time}
+          location={this.state.dialogData.location}
+          address={this.state.dialogData.address}
+          description={this.state.dialogData.description}
+        />
       </ScrollView>
     );
   }

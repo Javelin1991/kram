@@ -31,7 +31,7 @@ const LinksStack = createStackNavigator({
 });
 
 LinksStack.navigationOptions = {
-  tabBarLabel: 'Purchases',
+  tabBarLabel: 'Categories',
   tabBarIcon: ({ focused }) => (
     <TabBarIcon
       focused={focused}
@@ -45,7 +45,7 @@ const SettingsStack = createStackNavigator({
 });
 
 SettingsStack.navigationOptions = {
-  tabBarLabel: 'Profile',
+  tabBarLabel: 'Daily Deals',
   tabBarIcon: ({ focused }) => (
     <TabBarIcon
       focused={focused}
