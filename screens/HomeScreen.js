@@ -28,6 +28,7 @@ const LEFT_DATA_SOURCE = [
     image: '',
     price: 10,
     description: 'Good bag',
+    imageUrl: require("../assets/images/Img_1.png")
   },
   {
     key: 1,
@@ -35,6 +36,7 @@ const LEFT_DATA_SOURCE = [
     image: '',
     price: 10,
     description: 'Good bag',
+    imageUrl: require("../assets/images/Img_2.png")
   },
   {
     key: 2,
@@ -42,6 +44,7 @@ const LEFT_DATA_SOURCE = [
     image: '',
     price: 10,
     description: 'Good bag',
+    imageUrl: require("../assets/images/Img_3.png")
   },
   {
     key: 3,
@@ -49,6 +52,7 @@ const LEFT_DATA_SOURCE = [
     image: '',
     price: 10,
     description: 'Good bag',
+    imageUrl: require("../assets/images/Img_4.png")
   },
 ];
 const RIGHT_DATA_SOURCE = [
@@ -58,6 +62,7 @@ const RIGHT_DATA_SOURCE = [
     image: '',
     price: 10,
     description: 'Good bag',
+    imageUrl: require("../assets/images/Img_5.png")
   },
   {
     key: 1,
@@ -65,6 +70,7 @@ const RIGHT_DATA_SOURCE = [
     image: '',
     price: 10,
     description: 'Good bag',
+    imageUrl: require("../assets/images/Img_6.png")
   },
   {
     key: 2,
@@ -72,6 +78,7 @@ const RIGHT_DATA_SOURCE = [
     image: '',
     price: 10,
     description: 'Good bag',
+    imageUrl: require("../assets/images/Img_7.png")
   },
   {
     key: 3,
@@ -79,6 +86,7 @@ const RIGHT_DATA_SOURCE = [
     image: '',
     price: 10,
     description: 'Good bag',
+    imageUrl: require("../assets/images/Img_8.png")
   },
 ];
 
@@ -115,18 +123,21 @@ export default class HomeScreen extends React.Component {
         image={this.state.image}
         title={rowData.title}
         price={rowData.price}
+        imageUrl={rowData.imageUrl}
         description={rowData.description}
       />
   )
 
   render() {
+    console.log("HN DEBUG hello world");
+    const imageUrl = require("../assets/images/Img_6.png");
     return (
       <ScrollView style={styles.container}>
         <View>
          <Text style={styles.bigHeader}>TFIG</Text>
         </View>
         <View style={styles.grid}>
-          <View style={styles.list}>
+          <View style={[styles.list, { marginRight: 8 }]}>
             <ListView
               renderRow={this.renderRow}
               dataSource={this.state.leftDataSource}
@@ -236,8 +247,7 @@ const styles = StyleSheet.create({
   },
   dialogContainer: {
     flex: 1,
-    height: WINDOW_HEIGHT/2,
-    width: WINDOW_WIDTH/3,
+    marginBottom: 50
   },
   dialogContentContainer: {
     flex: 1,
@@ -267,9 +277,9 @@ const styles = StyleSheet.create({
     borderRadius: 100,
   },
   image: {
-    height: 120,
-    width: 120,
-    borderRadius: 60
+    height: WINDOW_WIDTH/2,
+    width: WINDOW_WIDTH/2,
+    overflow: 'hidden'
   },
   matchTitleContainer: {
     position: 'absolute',
@@ -289,7 +299,8 @@ const styles = StyleSheet.create({
   },
   grid: {
     flex: 1,
-    flexDirection: 'row'
+    flexDirection: 'row',
+    marginHorizontal: 16
   },
   list: {
     flex: 1,
