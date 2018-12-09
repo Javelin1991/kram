@@ -133,33 +133,57 @@ export default class KramDialog extends React.Component {
                      resizeMode="cover"
                 />
               </View>
-              <View style={styles.infoRow}>
+              <View style={[styles.infoRow, { marginTop: 16 }]}>
                 <View style={styles.icon}>
-                  <Ionicons name="md-calendar" size={24} color="grey" />
+                  <Ionicons name="md-time" size={24.5} color="grey" />
                 </View>
                 <View>
-                  <Text style={styles.subtext}>{`$${this.props.price}`}</Text>
                   <Text style={styles.greysubtext}>{this.props.time}</Text>
-                  <Text style={styles.link}>Add to Cart</Text>
                 </View>
               </View>
 
               <View style={styles.infoRow}>
                 <View style={styles.icon}>
-                  <Ionicons name="md-pin" size={24} color="grey" />
+                  <Ionicons name="md-pricetag" size={24} color="grey" />
                 </View>
                 <View>
-                  <Text style={styles.subtext}>{this.props.location}</Text>
-                  <Text style={styles.greysubtext}>{this.props.address}</Text>
+                  <Text style={styles.greysubtext}>{`$${this.props.price}`}</Text>
                 </View>
               </View>
 
               <View style={styles.infoRow}>
                 <View style={styles.icon}>
-                  <Ionicons name="md-clipboard" size={24} color="grey" />
+                  <Ionicons name="md-heart" size={24} color="grey" />
                 </View>
                 <View>
-                  <Text style={styles.subtext}>{this.props.description}</Text>
+                  <Text style={styles.greysubtext}>{`${this.props.likes} Likes`}</Text>
+                </View>
+              </View>
+
+              <View style={styles.infoRow}>
+                <View style={styles.icon}>
+                  <Ionicons name="md-cube" size={24} color="grey" />
+                </View>
+                <View>
+                  <Text style={styles.greysubtext}>{this.props.condition}</Text>
+                </View>
+              </View>
+
+              <View style={styles.infoRow}>
+                <View style={styles.icon}>
+                  <Ionicons name="md-grid" size={24} color="grey" />
+                </View>
+                <View>
+                  <Text style={styles.greysubtext}>{this.props.type}</Text>
+                </View>
+              </View>
+
+              <View style={styles.infoRow}>
+                <View style={styles.icon}>
+                  <Ionicons name="md-information-circle" size={24} color="grey" />
+                </View>
+                <View>
+                  <Text style={styles.greysubtext}>{this.props.description}</Text>
                 </View>
               </View>
             </ScrollView>
@@ -193,7 +217,8 @@ const styles = StyleSheet.create({
     marginBottom: 50
   },
   infoRow: {
-    padding: 15,
+    paddingHorizontal: 16,
+    paddingVertical: 8,
     flexDirection: 'row',
   },
   plaintext: {
@@ -236,6 +261,7 @@ const styles = StyleSheet.create({
   },
   content: {
     flex: 1,
+    alignItems: 'stretch'
   },
   loaderContainer: {
     flex: 1,
@@ -244,7 +270,6 @@ const styles = StyleSheet.create({
   },
   textFieldRow: {
     flexDirection: 'row',
-    marginBottom: 16
   },
   labelText: {
     fontFamily: 'Avenir',
