@@ -25,89 +25,92 @@ const LEFT_DATA_SOURCE = [
   {
     key: 0,
     title: 'Wallet',
-    image: '',
+    type: 'Man Wallets',
     price: 10,
-    description: 'Good bag',
+    description: '[COACH] Man Wallet (Black)\nAll photos are of the actual product taken by us',
     imageUrl: require("../assets/images/Img_1.png"),
-    time: '',
-    location: '',
-    address: '',
+    time: '1 month ago',
+    likes: 10,
+    condition: 'New',
   },
   {
     key: 1,
     title: 'Bag',
-    image: '',
-    price: 10,
-    description: 'Good bag',
+    type: 'Woman Bags',
+    price: 20,
+    description: '[KATE SPADE] Woman Bag (Green)\nAll photos are of the actual product taken by us',
     imageUrl: require("../assets/images/Img_2.png"),
-    time: '',
-    location: '',
-    address: '',
+    time: '1 day ago',
+    likes: 10,
+    condition: 'New',
   },
   {
     key: 2,
     title: 'Bag',
-    image: '',
-    price: 10,
-    description: 'Good bag',
+    type: 'Woman Bags',
+    price: 30,
+    description: '[KATE SPADE] Woman Bag (Black)\nAll photos are of the actual product taken by us',
     imageUrl: require("../assets/images/Img_3.png"),
-    time: '',
-    location: '',
-    address: '',
+    time: '3 days ago',
+    likes: 10,
+    condition: 'New',
   },
   {
     key: 3,
     title: 'Wallet',
-    image: '',
-    price: 10,
-    description: 'Good bag',
+    type: 'Woman Wallets',
+    price: 40,
+    description: '[KATE SPADE] Woman Wallet (Nude)\nAll photos are of the actual product taken by us',
     imageUrl: require("../assets/images/Img_4.png"),
-    time: '',
-    location: '',
-    address: '',
+    time: '5 days ago',
+    likes: 10,
+    condition: 'New',
   },
 ];
 const RIGHT_DATA_SOURCE = [
   {
     key: 0,
     title: 'Wallet',
-    image: '',
-    price: 10,
-    description: 'Good bag',
+    type: 'Woman Wallets',
+    price: 35,
+    description: '[KATE SPADE] Woman Wallet (Black)\nAll photos are of the actual product taken by us',
     imageUrl: require("../assets/images/Img_5.png"),
-    time: '',
-    location: '',
-    address: '',
+    time: '1 week ago',
+    likes: 10,
+    condition: 'New',
   },
   {
     key: 1,
     title: 'Wallet',
-    image: '',
-    price: 10,
-    description: 'Good bag',
+    type: 'Woman Wallets',
+    price: 24,
+    description: '[KATE SPADE] Woman Wallet (Nude)\nAll photos are of the actual product taken by us',
     imageUrl: require("../assets/images/Img_6.png"),
-    time: '',
-    location: '',
-    address: '',
+    time: '3 weeks ago',
+    likes: 10,
+    condition: 'New',
   },
   {
     key: 2,
     title: 'Wallet',
-    image: '',
-    price: 10,
-    description: 'Good bag',
-    imageUrl: require("../assets/images/Img_7.png")
+    type: 'Man Wallets',
+    price: 80,
+    description: '[COACH] Man Wallet (Black)\nAll photos are of the actual product taken by us',
+    imageUrl: require("../assets/images/Img_7.png"),
+    time: '3 weeks ago',
+    likes: 10,
+    condition: 'New',
   },
   {
     key: 3,
     title: 'Bag',
-    image: '',
-    price: 10,
-    description: 'Good bag',
+    type: 'Woman Bags',
+    price: 35,
+    description: '[KATE SPADE] Woman Bag (Pink)\nAll photos are of the actual product taken by us',
     imageUrl: require("../assets/images/Img_8.png"),
-    time: '',
-    location: '',
-    address: '',
+    time: '1 month ago',
+    likes: 10,
+    condition: 'New',
   },
 ];
 
@@ -212,10 +215,10 @@ export default class HomeScreen extends React.Component {
           handleAction={this.handleAction}
           title={this.state.dialogData.title}
           price={this.state.dialogData.price}
-          image={this.state.dialogData.image}
+          type={this.state.dialogData.type}
           time={this.state.dialogData.time}
-          location={this.state.dialogData.location}
-          address={this.state.dialogData.address}
+          likes={this.state.dialogData.likes}
+          condition={this.state.dialogData.condition}
           description={this.state.dialogData.description}
           imageUrl={this.state.dialogData.imageUrl}
         />
@@ -227,7 +230,7 @@ export default class HomeScreen extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingTop: 50,
+    paddingTop: 25,
     backgroundColor: 'white'
   },
   bigHeader:{
