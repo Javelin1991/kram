@@ -17,6 +17,7 @@ import Dialog, { SlideAnimation, DialogContent, DialogTitle, DialogButton } from
 import { Ionicons } from '@expo/vector-icons';
 import { Constants } from 'expo';
 import { TextField } from 'react-native-material-textfield';
+import { CreditCardInput, LiteCreditCardInput } from "react-native-credit-card-input";
 
 const WINDOW_WIDTH = Dimensions.get('window').width;
 const WINDOW_HEIGHT = Dimensions.get('window').height;
@@ -69,6 +70,7 @@ export default class KramDialog extends React.Component {
         <Text style={styles.sectionText}>Invitees</Text>
         { this.renderRecipants() }
         <Text style={styles.sectionText}>Your credit information</Text>
+        <CreditCardInput onChange={this._onChange} />
       </View>
     )
   }
