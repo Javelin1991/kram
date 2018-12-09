@@ -148,19 +148,19 @@ export default class HomeScreen extends React.Component {
    });
   }
 
-  resetLoaderOnDelay = () => {
+  resetLoaderOnDelay = (delay) => {
     if (this.loaderTimeout != undefined) clearTimeout(this.loaderTimeout);
-    this.loaderTimeout = setTimeout(() => { this.setState({ isLoading: !this.state.isLoading }) }, 200);
+    this.loaderTimeout = setTimeout(() => { this.setState({ isLoading: !this.state.isLoading }) }, delay);
   }
 
   goToKramView = () => {
     this.setState({ isLoading: true, type: 'kram', isItemView: false, isKramView: true, isPaymentSuccessView: false });
-    this.resetLoaderOnDelay();
+    this.resetLoaderOnDelay(500);
   }
 
   goToPaymentSuccessView = () => {
     this.setState({ isLoading: true, type: 'payment_success', isItemView: false, isKramView: false, isPaymentSuccessView: true });
-    this.resetLoaderOnDelay();
+    this.resetLoaderOnDelay(1500);
   }
 
   handleAction = () => {

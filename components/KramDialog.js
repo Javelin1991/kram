@@ -11,7 +11,8 @@ import {
   Platform,
   ActivityIndicator,
   TextInput,
-  KeyboardAvoidingView
+  KeyboardAvoidingView,
+  Keyboard
 } from 'react-native';
 import Colors from '../constants/Colors';
 import Dialog, { SlideAnimation, DialogContent, DialogTitle, DialogButton } from 'react-native-popup-dialog';
@@ -34,6 +35,43 @@ export default class KramDialog extends React.Component {
     this.recipientsCount = 1;
   }
 
+  componentWillMount() {
+    if (Platform.OS === 'ios') {
+        this.keyboardWillShowListener = Keyboard.addListener('keyboardWillShow', this._keyboardWillShow.bind(this));
+        this.keyboardWillHideListener = Keyboard.addListener('keyboardWillHide', this._keyboardWillHide.bind(this));
+    } else {
+        this.keyboardDidShowListener = Keyboard.addListener('keyboardDidShow', this._keyboardDidShow.bind(this));
+        this.keyboardDidHideListener = Keyboard.addListener('keyboardDidHide', this._keyboardDidHide.bind(this));
+    }
+  }
+
+  componentWillUnmount() {
+      if (Platform.OS === 'ios') {
+          this.keyboardWillShowListener.remove();
+          this.keyboardWillHideListener.remove();
+      } else {
+          this.keyboardDidShowListener.remove();
+          this.keyboardDidHideListener.remove();
+      }
+  }
+
+
+  _keyboardWillShow(event) {
+
+  }
+
+  _keyboardWillHide(event) {
+      this.scrollView.scrollTo({x: 0, y: 0, animated: true})
+  }
+
+  _keyboardDidShow(event) {
+
+  }
+
+  _keyboardDidHide(event) {
+      this.scrollView.scrollTo({x: 0, y: 0, animated: true})
+  }
+
   onChangeText = (field, value) => {
     this.setState({ [field]: value });
   }
@@ -46,11 +84,15 @@ export default class KramDialog extends React.Component {
     this.setState({ recipients: newRecipients });
   }
 
+  onFocus = (value) => {
+      this.scrollView.scrollTo({x: 0, y: value, animated: true})
+  }
+
   renderKramView = () => {
     return (
       !this.props.isItemView && this.props.isKramView && !this.props.isPaymentSuccessView && !this.props.isLoading &&
-      <ScrollView style={styles.kramView}>
-        <KeyboardAvoidingView behavior="position">
+      <ScrollView style={styles.kramView} ref={(ref) => this.scrollView = ref }>
+        <KeyboardAvoidingView behavior="padding">
         <Text style={[styles.sectionText, { alignSelf: 'center', marginBottom: 20 }]}>Split evenly among the group</Text>
         <Text style={styles.sectionText}>Your group</Text>
         <View style={styles.textFieldRow}>
@@ -59,6 +101,7 @@ export default class KramDialog extends React.Component {
             inputContainerStyle={styles.textField}
             labelTextStyle={styles.labelText}
             value={this.state.name}
+            onFocus={ () => this.onFocus(80)}
             containerStyle={{ flex: 1, marginRight: 12 }}
             onChangeText={ (name) => this.onChangeText('name', name) }
           />
@@ -67,6 +110,7 @@ export default class KramDialog extends React.Component {
             inputContainerStyle={styles.textField}
             labelTextStyle={styles.labelText}
             value={this.state.email}
+            onFocus={ () => this.onFocus(80)}
             containerStyle={{ flex: 1 }}
             onChangeText={ (email) => this.onChangeText('email', email) }
           />
