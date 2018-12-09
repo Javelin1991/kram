@@ -165,8 +165,6 @@ export default class HomeScreen extends React.Component {
   )
 
   render() {
-    console.log("HN DEBUG hello world");
-    const imageUrl = require("../assets/images/Img_6.png");
     return (
       <ScrollView style={styles.container}>
         <View style={styles.grid}>

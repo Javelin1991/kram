@@ -184,8 +184,7 @@ const styles = StyleSheet.create({
   },
   container: {
     flex: 1,
-    height: WINDOW_HEIGHT,
-    width: WINDOW_WIDTH,
+    marginBottom: 50
   },
   infoRow: {
     padding: 15,
