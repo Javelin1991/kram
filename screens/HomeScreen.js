@@ -132,7 +132,8 @@ export default class HomeScreen extends React.Component {
       isPaymentSuccessView: false,
       leftDataSource: lds.cloneWithRows(LEFT_DATA_SOURCE),
       rightDataSource: rds.cloneWithRows(RIGHT_DATA_SOURCE),
-      dialogData: {}
+      dialogData: {},
+      showPaymentTitle: true
     }
   }
 
@@ -144,8 +145,10 @@ export default class HomeScreen extends React.Component {
       isLoading: false,
       isItemView: true,
       isKramView: false,
-      isPaymentSuccessView: false
+      isPaymentSuccessView: false,
    });
+   if (!this.state.showPaymentTitle)
+      this.setState({ showPaymentTitle: true });
   }
 
   resetLoaderOnDelay = () => {
@@ -161,6 +164,11 @@ export default class HomeScreen extends React.Component {
   goToPaymentSuccessView = () => {
     this.setState({ isLoading: true, type: 'payment_success', isItemView: false, isKramView: false, isPaymentSuccessView: true });
     this.resetLoaderOnDelay();
+  }
+
+  togglePaymentTitle = () => {
+    console.log('togglePaymentTitle')
+    this.setState({ showPaymentTitle: !this.state.showPaymentTitle });
   }
 
   handleAction = () => {
@@ -221,6 +229,8 @@ export default class HomeScreen extends React.Component {
           condition={this.state.dialogData.condition}
           description={this.state.dialogData.description}
           imageUrl={this.state.dialogData.imageUrl}
+          togglePaymentTitle={this.togglePaymentTitle}
+          showPaymentTitle={this.state.showPaymentTitle}
         />
       </ScrollView>
     );

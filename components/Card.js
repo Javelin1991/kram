@@ -26,7 +26,7 @@ export default class Card extends React.Component {
                    resizeMode="cover"
             	/>
             </View>
-            <View style={{flex:1, flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginHorizontal: 16, marginVertical: 8 }}>
+            <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginHorizontal: 16, marginVertical: 8 }}>
                 <Text style={styles.subtext}>{this.props.title}</Text>
                 <View style={{width: 30, height: 30}}>
                   <Ionicons name="md-cash" size={24} color="grey" />
